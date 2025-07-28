@@ -1,0 +1,107 @@
+@if (isLoading) {
+<div class="text-center py-10">
+    <p class="text-gray-500 text-lg fade-in">Loading product details...</p>
+</div>
+} @else if (hasError) {
+<div class="text-center py-10 text-red-600">
+    <p class="text-xl font-semibold">Oops! 😞</p>
+    <p class="text-base">{{ errorMessage }}</p>
+    <button (click)="getProductDetails()" class="mt-4 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+        Retry
+    </button>
+</div>
+} @else {
+<header
+    class="bg-white dark:bg-gray-900 py-6 px-4 dark:shadow-gray-600 shadow-sm hover:shadow-lg transition border-b border-gray-200 dark:border-gray-700">
+    <div class="max-w-7xl mx-auto">
+        <!-- Breadcrumb -->
+        <nav class="text-sm text-gray-500 dark:text-gray-400 mb-2">
+            <a href="/products" class="hover:underline">Products</a> /
+            <span class="text-gray-700 dark:text-gray-200 font-medium">{{ prodData?.title }}</span>
+        </nav>
+
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white capitalize">
+            {{ prodData?.category }}
+        </h1>
+    </div>
+</header>
+
+
+<div class="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+    <div class="w-full flex justify-center">
+        <div data-modal-target="default-modal" data-modal-toggle="default-modal"
+            class="cursor-pointer w-full max-w-md h-[400px] bg-white rounded-xl shadow-md dark:shadow-gray-500 hover:shadow-2xl transition p-4 flex items-center justify-center">
+            <img [src]="prodData?.image" [alt]="prodData?.title" class="max-h-full max-w-full object-contain" />
+        </div>
+    </div>
+
+    <div class="w-full">
+        <p class="text-sm text-orange-500 dark:text-orange-400 font-semibold mb-2 uppercase fade-in">{{
+            prodData?.category }}</p>
+        <h1 class=" fade-in text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4">
+            {{ prodData?.title }}
+        </h1>
+
+        <div class="flex items-center gap-2 mb-4">
+            <div class="flex gap-0.5 items-center">
+                <i class="fas fa-star text-yellow-400"></i>
+                <span class="text-gray-500 dark:text-white text-sm">{{ prodData?.rating?.rate }}</span>
+            </div>
+        </div>
+
+        <div class="text-3xl font-bold text-orange-600 dark:text-orange-400 mb-6">
+            ${{ prodData?.price }}
+        </div>
+
+        <p class="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">
+            {{ prodData?.description }}
+        </p>
+        @if (prodData?.rating?.count! < 150 ) { <span
+            class=" text-red-500 text-sm font-semibold my-3 animate__animated animate__shakeX">
+            Limited
+            Stock! Hurry Up</span>}
+            <div class="flex flex-col sm:flex-row gap-4 mt-5">
+                <button routerLink="/cart" (click)="addToCart(prodData!)"
+                    class="bg-orange-500 hover:bg-orange-600 cursor-pointer text-white px-6 py-3 rounded-lg font-medium transition shadow-md flex items-center justify-center gap-2">
+                    <i class=" fas fa-shopping-cart"></i> Add to Cart
+                </button>
+                <button
+                    class="bg-gray-200 hover:bg-gray-300 cursor-pointer dark:bg-gray-500 dark:hover:bg-gray-600 text-gray-800 dark:text-white px-6 py-3 rounded-lg font-medium transition">
+                    Buy Now
+                </button>
+            </div>
+    </div>
+</div>
+
+
+}
+<!-- Main modal -->
+<div id="default-modal" tabindex="-1" aria-hidden="true"
+    class="hidden fixed inset-0 z-50 items-center w-full h-screen overflow-y-auto bg-black/30">
+
+    <div class="relative w-full max-w-lg h-screen p-4">
+        <!-- Modal content -->
+        <div class="flex flex-col h-full bg-white rounded-lg shadow-sm dark:bg-gray-700">
+            <!-- Modal header -->
+            <div
+                class="flex items-center justify-between p-4 md:p-5 border-b rounded-t border-gray-200 dark:border-gray-600">
+                <button type="button"
+                    class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+                    data-modal-hide="default-modal">
+                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                        viewBox="0 0 14 14">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+                    </svg>
+                    <span class="sr-only">Close modal</span>
+                </button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="flex-1 overflow-y-auto p-7 md:p-5 space-y-2">
+                <img class="max-w-sm h-auto object-contain rounded p-3 mx-auto" [src]="prodData?.image"
+                    [alt]="prodData?.title" />
+            </div>
+        </div>
+    </div>
+</div>

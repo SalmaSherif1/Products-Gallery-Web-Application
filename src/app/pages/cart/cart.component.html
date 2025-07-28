@@ -1,0 +1,39 @@
+@if (cartItems.length > 0) {
+<section class="w-[75%] mx-auto">
+    <h1 class="text-center text-orange-600 text-4xl dark:text-orange-400 font-bold">Shop Cart</h1>
+    <button class="text-sm bg-red-900 dark:bg-red-500 text-white rounded px-6 block ms-auto py-1 cursor-pointer"
+        (click)="clearCart()">
+        Clear Cart
+    </button>
+
+    <h3 class="text-orange-600 dark:text-orange-400 font-bold my-2 animate__animated animate__flash">
+        Total Cart Price: {{totalPrice.toFixed(2)}} EGP
+    </h3>
+
+    <!--  cart item -->
+    <div *ngFor="let item of cartItems" class="grid md:grid-cols-[10%_minmax(0,1fr)] gap-4 border-b my-5">
+        <!-- img -->
+        <div>
+            <img [src]="item.image" class="w-full h-[100px] object-contain mb-2" [alt]="item.title" />
+        </div>
+        <!-- info -->
+        <div class="flex justify-between items-center">
+            <div>
+                <h3>Title: {{item.title}}</h3>
+                <h4 class="text-orange-500 dark:text-orange-400">Price: {{item.price}} EGP</h4>
+                <button class="cursor-pointer" (click)="removeCartItemById(item.id)"><i
+                        class="fas fa-trash-can text-orange-600 dark:text-orange-400"></i> Remove
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <button
+        class="py-2 px-4 my-3 text-white rounded-lg block me-auto bg-orange-700 hover:bg-orange-800  dark:bg-orange-400 dark:hover:bg-orange-500  cursor-pointer">Payment</button>
+</section> } @else {
+<h3 class="text-2xl text-orange-500 text-center italic my-10 fade-in">
+    Your cart is feeling lonely... 🛒 Add some products!
+</h3>
+}
