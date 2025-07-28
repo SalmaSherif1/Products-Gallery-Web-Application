@@ -14,4 +14,7 @@ export class ProductsService {
   getSpecificProduct(id: string): Observable<any> {
     return this.httpClient.get(`${environment.baseUrl}/products/${id}`);
   }
+  getIds() {
+    return ['1', '2', '3'];
+  }
 }
